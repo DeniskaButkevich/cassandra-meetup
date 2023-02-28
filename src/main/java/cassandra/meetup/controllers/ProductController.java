@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 
@@ -32,6 +33,12 @@ public class ProductController {
     @RequestMapping({"/product/list", "/product"})
     public String listProducts(Model model) {
         model.addAttribute("products", productService.listAll());
+        return "product/list";
+    }
+
+    @RequestMapping({"/product/price/{id}"})
+    public String listProductsByPrice(@PathVariable BigDecimal id, Model model) {
+        model.addAttribute("products", productService.listAllByPrice(id));
         return "product/list";
     }
 

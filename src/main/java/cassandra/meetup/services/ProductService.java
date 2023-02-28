@@ -5,6 +5,7 @@ import cassandra.meetup.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,10 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         productRepository.findAll().forEach(products::add);
         return products;
+    }
+
+    public List<Product> listAllByPrice(BigDecimal price) {
+        return new ArrayList<>(productRepository.findAllByPrice(price));
     }
 
     public Product getById(UUID id) {

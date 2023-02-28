@@ -31,7 +31,8 @@
             <tr th:each="product : ${products}">
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.description}"></td>
-                <td th:text="${product.price}"></td>
+                <!--                <td th:text="${product.price}"></td>-->
+                <td><a th:href="${'/product/price/' + product.price}" th:text="${product.price}"></a></td>
                 <td th:text="${product.name}"></td>
                 <td><a th:href="${'/product/show/' + product.id}">View</a></td>
                 <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>
