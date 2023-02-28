@@ -1,0 +1,46 @@
+version: "3"
+services:
+  ubuntu-base:
+    build: ./ubuntu
+    image: ubuntu-base
+    container_name: ubuntu-base
+
+  cassandra:
+    build: ./cassandra
+    image: cassandra
+    container_name: cassandra
+    restart: always
+    ports:
+      - "9042:9042"
+    tty: true
+    environment:
+      MAX_HEAP_SIZE: 1024M
+      HEAP_NEWSIZE: 1M
+
+  cassandra-web:
+    build:
+      context: ./cassandra/
+      dockerfile: cassandra-web.Dockerfile
+    image: cassandra-web
+    container_name: cassandra-web
+    ports:
+      - "8083:8083"
+    restart: always
+    environment:
+      HOST_PORT: ":8083"
+      CASSANDRA_HOST: cassandra
+      CASSANDRA_PORT: 9042
+
+  ui-for-docker:
+    image: uifd/ui-for-docker
+    container_name: ui-for-docker
+    ports:
+      - "7000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+
+volumes:
+  all-logs:
+  pgadmin:
+  pg-data:
